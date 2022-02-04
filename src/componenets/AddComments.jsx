@@ -1,20 +1,23 @@
 import React, { useState } from "react"
 import axios from "axios"
+import useForm from "../customHooks/useForm"
 
 function AddComments({ name, setArticleData }) {
+  // custom hook
+  const [value, setValue] = useForm({ user: "", text: "" })
+
+  // saving comments api
   const handleSubmitComment = () => {
     axios
       .post(`http://localhost:5000/api/article/${name}/comments`, {
-        name: user,
-        text: comment,
+        name: value.user,
+        text: value.text,
       })
       .then(response => {
         setArticleData(response.data)
       })
   }
 
-  const [comment, setComment] = useState("")
-  const [user, setUser] = useState("")
 
   return (
     <div>
@@ -22,18 +25,18 @@ function AddComments({ name, setArticleData }) {
         <label htmlFor="">
           Your name
           <input
-            onChange={e => setUser(e.target.value)}
-            value={user}
+            name="user"
+            onChange={setValue}
+            value={value.user}
             type="text"
           />
         </label>
         <label htmlFor="">
           Enter comment
           <textarea
-            onChange={e => setComment(e.target.value)}
-            value={comment}
-            name=""
-            id=""
+            onChange={setValue}
+            value={value.text}
+            name="text"
             cols="30"
             rows="10"
           ></textarea>
