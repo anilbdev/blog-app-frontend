@@ -1,0 +1,11 @@
+.signup-container{
+    border: 2px solid red;
+}
+.form-container{
+    
+}
+.form-inputs{
+    display: flex;
+    flex-direction: column;
+
+}

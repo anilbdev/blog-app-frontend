@@ -18,7 +18,6 @@ function AddComments({ name, setArticleData }) {
       })
   }
 
-
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
