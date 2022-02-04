@@ -33,7 +33,7 @@ function ArticlePage() {
         <UpvoteSection name={name} setArticleData={setArticleData} articleData={articleData} />
         <p>{article.description}</p>
         <Comments comments={articleData.comments} />
-        <AddComments name={name}/>
+        <AddComments name={name} setArticleData={setArticleData} articleData={articleData}/>
       </div>
     )
   }
