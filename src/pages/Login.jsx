@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-
+import {validation_login} from '../api/validation'
 function Login() {
   const [formValues, setFormValues] = useState({
     email: "",
@@ -19,12 +19,12 @@ function Login() {
   //validation and sending details to server
   const handleSubmit = event => {
     event.preventDefault()
-    // setFormErrorValues(validation(formValues))
+    setFormErrorValues(validation_login(formValues))
     setIsSubmit(true)
   }
 
   useEffect(() => {
-    // if (Object.keys(formErrorValues).length === 0 && isSubmit)
+    if (Object.keys(formErrorValues).length === 0 && isSubmit)
     alert("Succesfull login")
   }, [isSubmit])
 

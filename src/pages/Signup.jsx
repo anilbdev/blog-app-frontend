@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import "./Signup.css"
-import validation from "../api/validation"
+import {validation_signup} from "../api/validation"
 function Signup() {
   const [formValues, setFormValues] = useState({
     username: "",
@@ -18,7 +18,7 @@ function Signup() {
   //validation and sending details to server
   const handleSubmit = event => {
     event.preventDefault()
-    setFormErrorValues(validation(formValues))
+    setFormErrorValues(validation_signup(formValues))
     setIsSubmit(true)
   }
 useEffect(() => {
