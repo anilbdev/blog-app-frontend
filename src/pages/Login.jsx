@@ -24,14 +24,16 @@ function Login() {
   }
 
   useEffect(() => {
-    if (Object.keys(formErrorValues).length === 0 && isSubmit)
-    alert("Succesfull login")
+    if (Object.keys(formErrorValues).length === 0 && isSubmit){
+
+    }
+    
   }, [isSubmit])
 
   return (
     <div>
       <form className="form-container" onSubmit={handleSubmit}>
-        <h2>Sign up</h2>
+        <h2>Login</h2>
         <div className="form-inputs">
           <label htmlFor="email">
             Email
@@ -56,7 +58,7 @@ function Login() {
             <p>{formErrorValues.password}</p>
           </label>
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   )

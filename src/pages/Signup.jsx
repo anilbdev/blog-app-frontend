@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./Signup.css"
 import {validation_signup} from "../api/validation"
+import { useNavigate } from "react-router-dom"
 function Signup() {
   const [formValues, setFormValues] = useState({
     username: "",
@@ -10,20 +11,25 @@ function Signup() {
   const [formErrorValues, setFormErrorValues] = useState({})
   // Flag for submit click
   const [isSubmit, setIsSubmit] = useState(false);
-  // function for onchange
+  const navigate =  useNavigate()
+
+  //! function for onchange
   const handleOnChange = event => {
     const { name, value } = event.target
     setFormValues({ ...formValues, [name]: value })
   }
-  //validation and sending details to server
+
+  //!validation and sending details to server
   const handleSubmit = event => {
     event.preventDefault()
     setFormErrorValues(validation_signup(formValues))
     setIsSubmit(true)
   }
 useEffect(() => {
-  if(Object.keys(formErrorValues).length === 0 && isSubmit)
-  alert('Succesfull login')
+  if(Object.keys(formErrorValues).length === 0 && isSubmit){
+    alert('Signup Succesfull..Please Login noe')
+    navigate('/login')
+  }
 
 
 }, [isSubmit]);
