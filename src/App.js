@@ -8,10 +8,11 @@ import Error from './pages/Error';
 import Header from './componenets/Header';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import HeaderBar from './componenets/AppBar';
 function App() {
   return (
     <BrowserRouter>
-    <Header/>
+    <HeaderBar/>
       <div className="App">
         <Routes>
           <Route path='/' element={<Home/>} />

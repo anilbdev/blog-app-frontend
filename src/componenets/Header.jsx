@@ -1,6 +1,9 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
-import "./Header.css"
+import Button from "@mui/material/Button"
+import LoginIcon from "@mui/icons-material/Login"
+import "./Header.scss"
+import "../global.scss"
 
 function Header() {
   const navigate = useNavigate()
@@ -10,25 +13,22 @@ function Header() {
         <h2 className="logo" onClick={() => navigate("/")}>
           Blogs
         </h2>
-        <div className="articles">
-          <Link
-            style={{ fontSize: 20, marginRight: 15, textDecoration: "none" }}
-            to="/"
+        <div className="menu">
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#E21717",
+              "&:hover": {
+                backgroundColor: "#f8abab",
+              },
+            }}
+            startIcon={<LoginIcon />}
+            onClick={() => {
+              navigate("/login")
+            }}
           >
-            Home
-          </Link>
-          <Link
-            style={{ fontSize: 20, marginRight: 15, textDecoration: "none" }}
-            to="/articles-list"
-          >
-            Articles
-          </Link>
-          <Link
-            style={{ fontSize: 20, marginRight: 15, textDecoration: "none" }}
-            to="/about"
-          >
-            About
-          </Link>
+            Login
+          </Button>
         </div>
       </nav>
     </div>

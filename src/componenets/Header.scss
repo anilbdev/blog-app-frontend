@@ -1,12 +1,9 @@
+@import '../global.scss';
+
 .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid red;
-    background-color: yellow;
+    background-color: $primaryColor;
     height: 70px;
-}
-
-.menu{
-    font-size: 20;
 }
