@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react"
-import "./Signup.css"
-import {validation_signup} from "../api/validation"
+import { validation_signup } from "../api/validation"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import "./Signup.css"
+
 function Signup() {
   const [formValues, setFormValues] = useState({
     username: "",
@@ -10,8 +12,8 @@ function Signup() {
   })
   const [formErrorValues, setFormErrorValues] = useState({})
   // Flag for submit click
-  const [isSubmit, setIsSubmit] = useState(false);
-  const navigate =  useNavigate()
+  const [isSubmit, setIsSubmit] = useState(false)
+  const navigate = useNavigate()
 
   //! function for onchange
   const handleOnChange = event => {
@@ -25,15 +27,34 @@ function Signup() {
     setFormErrorValues(validation_signup(formValues))
     setIsSubmit(true)
   }
-useEffect(() => {
-  if(Object.keys(formErrorValues).length === 0 && isSubmit){
-    alert('Signup Succesfull..Please Login noe')
-    navigate('/login')
+
+  //! axios sending user details to DB function
+  const handleUserDetails = () => {
+    axios
+      .post("http://localhost:5000/api/register", {
+        name: formValues.username,
+        email: formValues.email,
+        password: formValues.password,
+      })
+      .then(response => {
+        if (response.data.status) {
+          alert("Signup Succesfull..Please Login noe")
+          navigate("/login")
+        }else{
+          alert('Try again after some time..!!')
+        }
+      })
+      .catch(err => {
+        alert("Try after sometime!!")
+      })
   }
 
-
-}, [isSubmit]);
-
+  //! useffect calls register api when isSubmit is changed
+  useEffect(() => {
+    if (Object.keys(formErrorValues).length === 0 && isSubmit) {
+      handleUserDetails()
+    }
+  }, [isSubmit])
 
   return (
     <div className="signup-container">
@@ -68,6 +89,7 @@ useEffect(() => {
               name="password"
               type="password"
               id="password"
+              autoComplete="on"
               value={formValues.password}
               onChange={handleOnChange}
             />

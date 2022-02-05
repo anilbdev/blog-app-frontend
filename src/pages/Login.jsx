@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react"
-import {validation_login} from '../api/validation'
+import { validation_login } from "../api/validation"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+
 function Login() {
   const [formValues, setFormValues] = useState({
     email: "",
@@ -9,25 +12,42 @@ function Login() {
 
   // Flag for submit click
   const [isSubmit, setIsSubmit] = useState(false)
+  const navigate = useNavigate()
 
-  // function for onchange
+  //! function for onchange
   const handleOnChange = event => {
     const { name, value } = event.target
     setFormValues({ ...formValues, [name]: value })
   }
 
-  //validation and sending details to server
+  //!validation and sending details to server
   const handleSubmit = event => {
     event.preventDefault()
     setFormErrorValues(validation_login(formValues))
     setIsSubmit(true)
   }
 
-  useEffect(() => {
-    if (Object.keys(formErrorValues).length === 0 && isSubmit){
+  //!api checking user credentials
+  const handleUserCredentials = () => {
+    axios
+      .post("http://localhost:5000/api/login", {
+        email: formValues.email,
+        password: formValues.password,
+      })
+      .then(response => {
+        if (response.data.status) {
+          navigate('/')
+        }else{
+          alert(response.data.data)
+          setIsSubmit(false)
+        }
+      })
+  }
 
+  useEffect(() => {
+    if (Object.keys(formErrorValues).length === 0 && isSubmit) {
+      handleUserCredentials()
     }
-    
   }, [isSubmit])
 
   return (
@@ -52,6 +72,7 @@ function Login() {
               name="password"
               type="password"
               id="password"
+              autoComplete="on"
               value={formValues.password}
               onChange={handleOnChange}
             />
