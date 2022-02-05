@@ -35,10 +35,10 @@ function Login() {
         password: formValues.password,
       })
       .then(response => {
-        if (response.data.status) {
+        if (response.data.user) {
           navigate('/')
         }else{
-          alert(response.data.data)
+          alert("No user found!!")
           setIsSubmit(false)
         }
       })
