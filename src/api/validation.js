@@ -20,7 +20,7 @@ function validation_signup(values){
 }
 
 
-function validation_login(values){
+ async function validation_login(values){
     const errors = {}
     const regex =/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
     

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { validation_login } from "../api/validation"
 import axios from "axios"
 import Container from "@mui/material/Container"
@@ -22,6 +22,7 @@ function Login() {
   // Flag for submit click
   const [isSubmit, setIsSubmit] = useState(false)
   const navigate = useNavigate()
+  const isFirstRender = useRef(true)
 
   //! function for onchange
   const handleOnChange = event => {
@@ -29,11 +30,22 @@ function Login() {
     setFormValues({ ...formValues, [name]: value })
   }
 
+  //! Function to check if zero error
+  const checkError = () => {
+    if (Object.keys(formErrorValues).length === 0) {
+      console.log("Inside if 3 ")
+      setIsSubmit(true)
+    }
+  }
+
   //!validation and sending details to validation-client side
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    setFormErrorValues(validation_login(formValues))
-    setIsSubmit(true)
+    validation_login(formValues).then(returnErr => {
+      setFormErrorValues(returnErr)
+
+     
+    })
   }
 
   //!api checking user credentials
@@ -58,7 +70,13 @@ function Login() {
       handleUserCredentials()
     }
   }, [isSubmit])
-
+  useEffect(()=>{
+    if (isFirstRender.current) {
+      isFirstRender.current = false // toggle flag after first render/mounting
+      return;
+    }
+    checkError()
+  },[formErrorValues])
   return (
     <Box sx={{ backgroundColor: "#207398" }}>
       <Container maxWidth="sm">
@@ -72,7 +90,10 @@ function Login() {
           }}
         >
           <Grid item xs={10} md={6}>
-            <Paper elevation={4} sx={{ backgroundColor: "#8C8984", borderRadius:5 }}>
+            <Paper
+              elevation={4}
+              sx={{ backgroundColor: "#8C8984", borderRadius: 5 }}
+            >
               <form
                 style={{
                   display: "flex",
@@ -88,7 +109,6 @@ function Login() {
                 <div className="form-inputs">
                   <TextField
                     error={formErrorValues.email && true}
-                    id="standard-error-helper-text"
                     label="Email"
                     helperText={formErrorValues.email || " "}
                     variant="standard"
@@ -99,7 +119,7 @@ function Login() {
 
                   <TextField
                     error={formErrorValues.password && true}
-                    id="standard-error-helper-text"
+                    type="password"
                     label="Password"
                     helperText={formErrorValues.password || " "}
                     variant="standard"
@@ -118,7 +138,7 @@ function Login() {
                     },
                   }}
                   startIcon={<LoginIcon />}
-                  type='submit'
+                  type="submit"
                 >
                   Login
                 </Button>
