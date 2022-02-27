@@ -33,7 +33,6 @@ function Login() {
   //! Function to check if zero error
   const checkError = () => {
     if (Object.keys(formErrorValues).length === 0) {
-      console.log("Inside if 3 ")
       setIsSubmit(true)
     }
   }
